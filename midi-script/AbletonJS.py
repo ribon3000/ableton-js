@@ -12,7 +12,7 @@ from .ApplicationView import ApplicationView
 from .Browser import Browser
 from .BrowserItem import BrowserItem
 from .CuePoint import CuePoint
-from .Device import Device
+from .Device import Device, Chain, ChainMixerDevice
 from .DeviceParameter import DeviceParameter
 from .MixerDevice import MixerDevice
 from .Scene import Scene
@@ -45,11 +45,13 @@ class AbletonJS(ControlSurface):
             "browser": Browser(c_instance, self.socket, self.application()),
             "browser-item": BrowserItem(c_instance, self.socket),
             "cue-point": CuePoint(c_instance, self.socket),
+            "chain": Chain(c_instance, self.socket),
             "device": Device(c_instance, self.socket),
             "device-parameter": DeviceParameter(c_instance, self.socket),
             "internal": Internal(c_instance, self.socket),
             "midi": Midi(c_instance, self.socket, self.tracked_midi, self.request_rebuild_midi_map),
             "mixer-device": MixerDevice(c_instance, self.socket),
+            "ChainMixerDevice": ChainMixerDevice(c_instance, self.socket),
             "scene": Scene(c_instance, self.socket),
             "song": Song(c_instance, self.socket),
             "song-view": SongView(c_instance, self.socket),
