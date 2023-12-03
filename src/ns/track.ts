@@ -1,6 +1,7 @@
 import { Ableton } from "..";
 import { Namespace } from ".";
 import { Device, RawDevice } from "./device";
+import { RackDevice } from "./rack-device";
 import { ClipSlot, RawClipSlot } from "./clip-slot";
 import { MixerDevice, RawMixerDevice } from "./mixer-device";
 import { Clip, RawClip } from "./clip";
@@ -198,7 +199,7 @@ export class Track extends Namespace<
       arrangement_clips: (clips: RawClip[]) =>
         clips.map((clip) => new Clip(ableton, clip)),
       color: (c) => new Color(c),
-      devices: (devices) => devices.map((d) => new Device(ableton, d)),
+      devices: (devices) => devices.map((d) => d.can_have_chains? new RackDevice(ableton,d) : new Device(ableton, d)),
       clip_slots: (clip_slots) =>
         clip_slots.map((c) => new ClipSlot(ableton, c)),
       mixer_device: (mixer_device) => new MixerDevice(ableton, mixer_device),

@@ -1,11 +1,12 @@
 import { Ableton } from "..";
 import { Namespace } from ".";
+import { Device, RawDevice } from "./device";
 import { RawDeviceParameter, DeviceParameter } from "./device-parameter";
-// import { RawChain, Chain } from "./chain";
+import { RawChain, Chain } from "./chain";
 
 export interface GettableProperties {
   can_have_chains: boolean;
-  // chains: RawChain[];
+  chains: RawChain[];
   can_have_drum_pads: boolean;
   class_display_name: string;
   class_name: string;
@@ -17,7 +18,7 @@ export interface GettableProperties {
 
 export interface TransformedProperties {
   parameters: DeviceParameter[];
-  // chains: Chain[];
+  chains: Chain[];
 }
 
 export interface SettableProperties {
@@ -28,15 +29,7 @@ export interface ObservableProperties {
   is_active: boolean;
   name: string;
   parameters: string;
-  // chains: Chain[];
-}
-
-export interface RawDevice {
-  id: string;
-  name: string;
-  type: DeviceType;
-  class_name: string;
-  can_have_chains: boolean;
+  chains: Chain[];
 }
 
 export enum DeviceType {
@@ -46,22 +39,22 @@ export enum DeviceType {
   Undefined = "undefined",
 }
 
-export class Device extends Namespace<
-  GettableProperties,
-  TransformedProperties,
-  SettableProperties,
-  ObservableProperties
-> {
+export class RackDevice extends Namespace<
+GettableProperties,
+TransformedProperties,
+SettableProperties,
+ObservableProperties
+>  {
   constructor(ableton: Ableton, public raw: RawDevice) {
-    super(ableton, "device", raw.id);
+    super(ableton, "rackdevice" , raw.id);
     this.transformers = {
       parameters: (ps) => ps.map((p) => new DeviceParameter(ableton, p)),
-      // chains: (cs) => cs.map((c) => new Chain(ableton, c)),
+      chains: (cs) => cs.map((c) => new Chain(ableton, c)),
     };
 
     this.cachedProps = {
       parameters: true,
-      // chains: this.get("can_have_chains") ? true : false,
+      chains: true,
     };
   }
 }

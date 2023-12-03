@@ -37,7 +37,6 @@ export class Chain extends Namespace<
 > {
     constructor(ableton: Ableton, public raw: RawChain){
         super(ableton, "chain", raw.id);
-        console.log("Chain constructor")
         
         this.transformers = {
             devices: (ds) => ds.map((d) => new Device(ableton, d)),

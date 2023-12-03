@@ -39,8 +39,6 @@ export class ChainMixerDevice extends Namespace<
   constructor(ableton: Ableton, public raw: RawChainMixerDevice) {
     super(ableton, "ChainMixerDevice", raw.id);
 
-    console.log("ChainMixerDevice constructor")
-
     this.transformers = {
       panning: (v) => new DeviceParameter(ableton, v),
       sends: (v) => v.map((s) => new DeviceParameter(ableton, s)),
